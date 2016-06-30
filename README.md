@@ -2,7 +2,7 @@
 
 This is my blatant fork of awesome Acorn-Jsx that served as base for great babej jsx transformation for React library.
 
-Why ?.
+Why ?
 
 In short:
 
