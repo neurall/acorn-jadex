@@ -13,22 +13,21 @@ Indentation is our friend as Coffescript and Python show us every day.
 So why dont write React apps more efficiently. Ie
 You write like before = all JSX language features stay since parser is the same. 
 just indentation now replaces the need of end tags
-`
+~~~~~~html
   <responsive drawer>
-`
+
    <menu>
     <menuitem1>
     <menuitem2>
     <menuitem3>
-`
+
    <content>
     <page1>
     <page2>    
     <page3>
-`
-
+~~~~~~
 instead of noisy hard to understand
-`
+~~~~~~html
   <responsive drawer>
    <menu>
     <menuitem1>
@@ -47,7 +46,7 @@ instead of noisy hard to understand
     </page3>
    </content>
   </responsive drawer>
-`
+~~~~~~
 
 Well the idea to keep html tags css and js in one place so it is 
 easy to see and understand "what looks how and when in small component focused file" is nowadays more important than ever.
