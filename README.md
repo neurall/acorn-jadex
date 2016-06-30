@@ -52,11 +52,11 @@ Well the idea to keep html tags css and js in one place so it is
 easy to see and understand "what looks how and when in small component focused file" is nowadays more important than ever.
 especially after years of fragmented impossible to maintainn mega monsters. 
 
-Wait! Isnt there already Jade templating language ?
+Wait! Isnt there already Jade templating language for that ?
 
 Yes but it forces you to again separate html and code. It intruduces yet another custom language for what js does better.
 You cant have clear easy to read es6 arrows imports intermixed with html tags like JSX does.
-also being able to distinguish what is visual part = '<div>' instead of 'div' and what is variable / code is important too.
+also being able to distinguish what is visual part = `<div>` instead of `div` and what is variable / code is important too.
 
 Main problem with HTML are noisy end tags.
 
