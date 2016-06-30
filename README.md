@@ -1,4 +1,77 @@
-# Acorn-JSX
+# Acorn-JadeX
+
+This is my blatant fork of awesome Acorn-Jsx that served as base for great babej jsx transformation for React library.
+
+Why ?.
+
+In short:
+
+	"JSX / html ending tags eat 50% of precious space yet are absolutely not needed"
+
+Indentation is our friend as Coffescript and Python show us every day.
+
+So why dont write React apps more efficiently. Ie
+You write like before = all JSX language features stay since parser is the same. 
+just indentation now replaces the need of end tags
+
+  <responsive drawer>
+
+   <menu>
+    <menuitem1>
+    <menuitem2>
+    <menuitem3>
+
+   <content>
+    <page1>
+    <page2>    
+    <page3>
+
+
+instead of noisy hard to understand
+
+  <responsive drawer>
+   <menu>
+    <menuitem1>
+    </menuitem1>
+    <menuitem2>
+    </menuitem2>
+    <menuitem3>
+    </menuitem3>
+   </menu>
+   <content>
+    <page1>
+    </page1>
+    <page2>    
+    </page2>
+    <page3>
+    </page3>
+   </content>
+  </responsive drawer>
+
+
+Well the idea to keep html tags css and js in one place so it is 
+easy to see and understand "what looks how and when in small component focused file" is nowadays more important than ever.
+especially after years of fragmented impossible to maintainn mega monsters. 
+
+Isnt there already Jade templating language ?
+
+Yes but you cant have clear easy to read es6 arrows imports intermixed with html tags like JSX does.
+also being able to distinguish what is visual part = <div> instead of div and what is variable / code is important too.
+
+But.
+
+Problem with html is that like XML it is unnecesarily noisy. And as the project grows you loose advantages that led you
+to mixing html with js in first place. Ie to keep you focused whereas html ending tags eat 50% of precious space yet are absolutely not needed
+Ie. To describe 
+
+Goal:
+
+I hope to produce patch to babel soon since it was based on accorn-jsx.
+But right now babel is so fragmented so i have no ide what version to patch. ver 5 ? v 6 ?
+Hopefully some more skilled folks will help ;)
+
+
+---- End of my shameless doc plug ---
 
 [![Build Status](https://travis-ci.org/RReverser/acorn-jsx.svg?branch=master)](https://travis-ci.org/RReverser/acorn-jsx)
 [![NPM version](https://img.shields.io/npm/v/acorn-jsx.svg)](https://www.npmjs.org/package/acorn-jsx)

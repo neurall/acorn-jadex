@@ -40,9 +40,19 @@ module.exports = function(acorn) {
   pp.jsx_readToken = function() {
     var out = '', chunkStart = this.pos;
     for (;;) {
-      if (this.pos >= this.input.length)
+      
+      // in Jade like mode there are no terminating tags so we skip this error
+      
+      var ch = 60;
+
+      if (this.pos < this.input.length) {
+
+        ch = this.input.charCodeAt(this.pos);
+
+      } else if(! this.options.plugins.jsx.jadeLikeJsx ) { 
+
         this.raise(this.start, 'Unterminated JSX contents');
-      var ch = this.input.charCodeAt(this.pos);
+      }   
 
       switch (ch) {
       case 60: // '<'
@@ -314,13 +324,42 @@ module.exports = function(acorn) {
       contents: for (;;) {
         switch (this.type) {
         case tt.jsxTagStart:
-          startPos = this.start; startLoc = this.startLoc;
-          this.next();
-          if (this.eat(tt.slash)) {
-            closingElement = this.jsx_parseClosingElementAt(startPos, startLoc);
+
+          // In Jade like mode node indentation decides whose child current node is
+          // <a>
+          //  <b> 
+          //   <c> we as c are a child of b
+          // ie. if we are not indented more than parent  then we are not his child
+          // <a>
+          //  <b>
+          //  <c> we are not more indented therefore we c are not child of b 
+          // and we buble up thru recursion to find real parrent a
+
+          var childDueToIndent=false;
+          if(this.startLoc.line   > openingElement.loc.start.line &&
+             this.startLoc.column > openingElement.loc.start.column) childDueToIndent=true;
+ 
+          if(!this.options.plugins.jsx.jadeLikeJsx || childDueToIndent) {
+            
+            startPos = this.start; startLoc = this.startLoc;
+            this.next();
+            if (this.eat(tt.slash)) {
+              closingElement = this.jsx_parseClosingElementAt(startPos, startLoc);
+              break contents;
+            }
+
+            children.push(this.jsx_parseElementAt(startPos, startLoc));
+
+          } else {
+            // This is probably not needed. But we generate closing tags in ast tree for compatibility 
+            // so our ast output is compatible with standard jsx ast output in case somebody expects closing tags.
+            if(!closingElement) {
+              var node2 = this.startNodeAt(startPos, startLoc);
+              node2.name = openingElement.name;
+              closingElement = this.finishNode(node2, 'JSXClosingElement');
+            }            
             break contents;
           }
-          children.push(this.jsx_parseElementAt(startPos, startLoc));
           break;
 
         case tt.jsxText:
@@ -332,7 +371,22 @@ module.exports = function(acorn) {
           break;
 
         default:
-          this.unexpected();
+
+          // In Jade like mode this not really unexpected since there are no clocing tags.
+
+          if(!this.options.plugins.jsx.jadeLikeJsx) {
+            this.unexpected();
+          } else {
+            
+            // This is probably not needed. But we generate closing tags in ast tree for compatibility 
+            // so our ast output is compatible with standard jsx ast output in case somebody expects closing tags.
+            if(!closingElement) {
+              var node2 = this.startNodeAt(startPos, startLoc);
+              node2.name = openingElement.name;
+              closingElement = this.finishNode(node2, 'JSXClosingElement');
+            }
+            break contents;
+          }
         }
       }
       if (getQualifiedJSXName(closingElement.name) !== getQualifiedJSXName(openingElement.name)) {
@@ -370,7 +424,8 @@ module.exports = function(acorn) {
 
     instance.options.plugins.jsx = {
       allowNamespaces: opts.allowNamespaces !== false,
-      allowNamespacedObjects: !!opts.allowNamespacedObjects
+      allowNamespacedObjects: !!opts.allowNamespacedObjects,
+      jadeLikeJsx: opts.jadeLikeJsx !== false,
     };
 
     instance.extend('parseExprAtom', function(inner) {
