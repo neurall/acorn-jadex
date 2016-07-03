@@ -1,6 +1,7 @@
 # Acorn-JadeX
 
 This is my blatant fork of awesome Acorn-Jsx that served as base for great babej jsx transformation for React library.
+Yes all the jsx development now happen in babel but this still makes sense if you plan in browser repl compilations but wanna use something smaller than 1mb babel-standalone
 
 Why ?
 
