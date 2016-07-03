@@ -66,11 +66,10 @@ Ie ability to keep you focused on what is being rendered
 
 
 
-Goal:
+Update:
 
-I hope to produce patch to babel soon since it was based on accorn-jsx.
-But right now babel is so fragmented so i have no ide what version to patch. ver 5 ? v 6 ?
-Hopefully some more skilled folks will help ;)
+For those using React thru Babel
+I now implemented JadeX as a plugin to babel. 
 
 
 ---- End of my shameless doc plug ---
