@@ -50,7 +50,11 @@ instead of noisy hard to understand
 ~~~~~~
 
 Well the idea to keep html tags css and js in one place so it is 
-easy to see and understand "what looks how and when in small component focused file" is nowadays more important than ever.
+easy to see and understand 
+
+  "what looks how and when in small component focused file" 
+  
+is nowadays more important than ever.
 especially after years of fragmented impossible to maintainn mega monsters. 
 
 Wait! Isnt there already Jade templating language for that ?
